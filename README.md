@@ -166,4 +166,4 @@ async handlePay() {
     });
 }
 ```
-Congrats! You now can accept payment in your website :)
+Congrats! You now can accept payment on your website :)
