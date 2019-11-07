@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import './PayButton.scss';
-import { Button } from '@material-ui/core';
+import { Button, CircularProgress, Box } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { API } from 'aws-amplify';
-import {
-    injectStripe,
-} from 'react-stripe-elements';
+import { injectStripe } from 'react-stripe-elements';
 
 class PayButtonContent extends Component {
+    state = {
+        loading: false,
+    }
     constructor() {
         super();
         this.handlePay = this.handlePay.bind(this)
     }
 
     async handlePay() {
-        if (this.props.onClickPay) this.props.onClickPay();
-        console.log(this.props.images)
+        this.setState({ loading: true })
         const body = {
             name: this.props.name,
             description: this.props.description,
@@ -36,14 +36,24 @@ class PayButtonContent extends Component {
             // If `redirectToCheckout` fails due to a browser or network
             // error, display the localized error message to your customer
             // using `result.error.message`.
-            if (this.props.onPayFail) this.props.onPayFail();
         });
+        this.setState({ loading: false })
     }
 
     render() {
-        const { disabled, amount, currency } = this.props;
+        const { loading } = this.state;
+        const { amount, currency } = this.props;
         return (
-            <Button onClick={this.handlePay} disabled={disabled} variant="contained" color="secondary">Pay ({parseFloat(Math.round(amount) / 100).toFixed(2)} {currency})</Button>
+            <Box display="flex" flexDirection="row-reverse" flexWrap="wrap" alignItems="center">
+                <Button onClick={this.handlePay} disabled={loading} variant="contained" color="secondary">Pay ({parseFloat(Math.round(amount) / 100).toFixed(2)} {currency})</Button>
+                <Box marginRight={2} />
+                {
+                    loading ?
+                        <CircularProgress color="secondary" />
+                        :
+                        null
+                }
+            </Box>
         );
     }
 }
@@ -61,9 +71,6 @@ PayButtonContent.propTypes = {
 
     success_url: PropTypes.string.isRequired,
     cancel_url: PropTypes.string.isRequired,
-
-    onClick: PropTypes.func,
-    onFail: PropTypes.func,
 
     disabled: PropTypes.bool,
 };

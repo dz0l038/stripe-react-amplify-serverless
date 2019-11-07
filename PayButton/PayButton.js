@@ -5,13 +5,6 @@ import { Elements, StripeProvider } from 'react-stripe-elements';
 import PayButtonContent from './PayButtonContent';
 
 class PayButton extends Component {
-    onClickPay() {
-        if (this.props.onClickPay) this.props.onClickPay();
-    }
-
-    onPayFail() {
-        if (this.props.onPayFail) this.props.onPayFail();
-    }
     render() {
         const {
             stripePublicKey,
@@ -44,8 +37,6 @@ class PayButton extends Component {
                         quantity={quantity}
                         success_url={success_url}
                         cancel_url={cancel_url}
-                        onClick={this.onClickPay}
-                        onFail={this.onPayFail}
                         disabled={disabled}
                     />
                 </Elements>
@@ -68,9 +59,6 @@ PayButton.propTypes = {
 
     success_url: PropTypes.string.isRequired,
     cancel_url: PropTypes.string.isRequired,
-
-    onClick: PropTypes.func,
-    onFail: PropTypes.func,
 
     disabled: PropTypes.bool,
 };
