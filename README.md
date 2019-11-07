@@ -101,9 +101,6 @@ Then you can copy past the code in this repo, this is a simple component display
     quantity={1}
     success_url='https://example.com/success?session_id={CHECKOUT_SESSION_ID}' // Where to redirect if success
     cancel_url='https://example.com/cancel' // Where to go if payment canceled
-    onClick={this.onClickPay}
-    onFail={this.onPayFail}
-    disabled={false}
 />
 ```
 You can make your own implementation pretty easily, without going into details here are some guidelines:
@@ -124,7 +121,6 @@ You will need to `import { Elements, StripeProvider } from 'react-stripe-element
             cancel_url={cancel_url}
             onClick={this.onClickPay}
             onFail={this.onPayFail}
-            disabled={disabled}
         />
     </Elements>
 </StripeProvider>
@@ -140,8 +136,6 @@ export default injectStripe(PayButtonContent);
 You can now implement a simple button that mak this call when clicked:
 ```
 async handlePay() {
-    if (this.props.onClickPay) this.props.onClickPay();
-    console.log(this.props.images)
     const body = {
         name: this.props.name,
         description: this.props.description,
@@ -162,7 +156,6 @@ async handlePay() {
         // If `redirectToCheckout` fails due to a browser or network
         // error, display the localized error message to your customer
         // using `result.error.message`.
-        if (this.props.onPayFail) this.props.onPayFail();
     });
 }
 ```
