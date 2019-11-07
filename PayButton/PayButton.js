@@ -20,8 +20,6 @@ class PayButton extends Component {
 
             success_url,
             cancel_url,
-
-            disabled
         } = this.props;
         return (
             <StripeProvider apiKey={stripePublicKey}>
@@ -37,7 +35,6 @@ class PayButton extends Component {
                         quantity={quantity}
                         success_url={success_url}
                         cancel_url={cancel_url}
-                        disabled={disabled}
                     />
                 </Elements>
             </StripeProvider>
@@ -59,8 +56,6 @@ PayButton.propTypes = {
 
     success_url: PropTypes.string.isRequired,
     cancel_url: PropTypes.string.isRequired,
-
-    disabled: PropTypes.bool,
 };
 
 export default PayButton;

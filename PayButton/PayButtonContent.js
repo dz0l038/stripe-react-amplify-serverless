@@ -71,8 +71,6 @@ PayButtonContent.propTypes = {
 
     success_url: PropTypes.string.isRequired,
     cancel_url: PropTypes.string.isRequired,
-
-    disabled: PropTypes.bool,
 };
 
 export default injectStripe(PayButtonContent);
